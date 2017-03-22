@@ -10,6 +10,7 @@
 		4B2B58E91E7C42DA00569D5E /* libGLEW.2.0.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B2B58E81E7C42DA00569D5E /* libGLEW.2.0.0.dylib */; };
 		4B2B58EB1E7C460A00569D5E /* libglfw.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B2B58EA1E7C460A00569D5E /* libglfw.dylib */; };
 		4B2B58ED1E7C461100569D5E /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B2B58EC1E7C461100569D5E /* OpenGL.framework */; };
+		4B2B58F41E7C577500569D5E /* ShaderFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4B2B58F21E7C577500569D5E /* ShaderFactory.cpp */; };
 		4B6A84931E7C41A8006412FE /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4B6A84921E7C41A8006412FE /* main.cpp */; };
 /* End PBXBuildFile section */
 
@@ -30,6 +31,8 @@
 		4B2B58E81E7C42DA00569D5E /* libGLEW.2.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libGLEW.2.0.0.dylib; path = ../../../../../usr/local/lib/libGLEW.2.0.0.dylib; sourceTree = "<group>"; };
 		4B2B58EA1E7C460A00569D5E /* libglfw.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libglfw.dylib; path = ../../../../../usr/local/lib/libglfw.dylib; sourceTree = "<group>"; };
 		4B2B58EC1E7C461100569D5E /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
+		4B2B58F21E7C577500569D5E /* ShaderFactory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ShaderFactory.cpp; sourceTree = "<group>"; };
+		4B2B58F31E7C577500569D5E /* ShaderFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShaderFactory.h; sourceTree = "<group>"; };
 		4B6A848F1E7C41A8006412FE /* OpenGL */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = OpenGL; sourceTree = BUILT_PRODUCTS_DIR; };
 		4B6A84921E7C41A8006412FE /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -80,6 +83,8 @@
 			isa = PBXGroup;
 			children = (
 				4B6A84921E7C41A8006412FE /* main.cpp */,
+				4B2B58F21E7C577500569D5E /* ShaderFactory.cpp */,
+				4B2B58F31E7C577500569D5E /* ShaderFactory.h */,
 			);
 			path = OpenGL;
 			sourceTree = "<group>";
@@ -142,6 +147,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4B2B58F41E7C577500569D5E /* ShaderFactory.cpp in Sources */,
 				4B6A84931E7C41A8006412FE /* main.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

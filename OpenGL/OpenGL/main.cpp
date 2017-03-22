@@ -15,6 +15,8 @@
 //glfw
 #include <GLFW/glfw3.h>
 
+#include "ShaderFactory.h"
+
 GLFWwindow* createWindow(int x = 0, int y = 0, int width = 800, int heigth = 600)
 {
     GLFWwindow* pWindow = glfwCreateWindow(width, heigth, "OpenGL", NULL, NULL);
@@ -64,6 +66,7 @@ int main(int argc, const char * argv[])
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
     
     GLFWwindow *window       = createWindow(0, 0, 800, 480);
+    GLuint  shaderProgram       = ShaderFactory::getInstance()->createShader("./shader/VertexShader.c", "./shader/FragmentShader.c");
     
     glfwSetKeyCallback(window, keyCallBack);
     
@@ -73,6 +76,8 @@ int main(int argc, const char * argv[])
         
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
+        
+    
         
         glfwSwapBuffers(window);
     }
