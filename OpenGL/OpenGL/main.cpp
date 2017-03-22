@@ -16,6 +16,7 @@
 #include <GLFW/glfw3.h>
 
 #include "ShaderFactory.h"
+#include "DataCollect.h"
 
 GLFWwindow* createWindow(int x = 0, int y = 0, int width = 800, int heigth = 600)
 {
@@ -69,6 +70,12 @@ int main(int argc, const char * argv[])
     GLuint  shaderProgram       = ShaderFactory::getInstance()->createShader("./shader/VertexShader.c", "./shader/FragmentShader.c");
     
     glfwSetKeyCallback(window, keyCallBack);
+    
+    GLuint VBO;
+    glGenBuffers( 1， &VBO );
+    glBindBuffer( GL_ARRAY_BUFFER, VBO );
+    
+    glBufferData( GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW );
     
     while ( !glfwWindowShouldClose(window))
     {
