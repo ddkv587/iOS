@@ -50,6 +50,12 @@ GLuint ShaderFactory::createShader(const GLchar* vertexPath, const GLchar* fragm
 		vShaderFile.open( vertexPath );
 		fShaderFile.open( fragmentPath );
 
+		if( !vShaderFile.is_open() || !fShaderFile.is_open() )
+		{
+			std::cout << "error open" << std::endl;
+			return 0;
+		}
+
 		std::stringstream vShaderStream, fShaderStream;
 
 		vShaderStream << vShaderFile.rdbuf();
