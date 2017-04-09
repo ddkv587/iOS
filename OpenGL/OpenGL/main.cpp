@@ -20,6 +20,7 @@
 
 #include "ShaderFactory.h"
 #include "DataCollect.h"
+#include "ImageLib.h"
 
 static float g_mixValue = 0.0;
 
@@ -124,9 +125,15 @@ int main(int argc, const char * argv[])
 
 	glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT );
 	glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT );
+    
+    ImageLib img;
+    img.LoadImageFile("/Users/ddk/Desktop/Project/OpenGL/OpenGL/resource/texture.png");
 
+    /*
 	int imgWidth, imgHeigth;
-	unsigned char* image = SOIL_load_image("resource/container.jpg", &imgWidth, &imgHeigth, 0, SOIL_LOAD_RGB);
+    unsigned char* image = SOIL_load_image("resource/container.jpg", &imgWidth, &imgHeigth, 0,SOIL_LOAD_RGB);
+    
+    memset(image, 0, 1024);
 	glTexImage2D( GL_TEXTURE_2D, 0, GL_RGB, imgWidth, imgHeigth, 0, GL_RGB, GL_UNSIGNED_BYTE, image );
 	glGenerateMipmap( GL_TEXTURE_2D );
 	SOIL_free_image_data(image);
@@ -142,7 +149,8 @@ int main(int argc, const char * argv[])
 	glGenerateMipmap( GL_TEXTURE_2D );
 	SOIL_free_image_data(image);
 	glBindTexture( GL_TEXTURE_2D, 0 );
-
+*/
+    
     while ( !glfwWindowShouldClose(window))
     {
         glfwPollEvents();
