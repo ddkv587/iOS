@@ -20,7 +20,14 @@
 
 #include "ShaderFactory.h"
 #include "DataCollect.h"
+
+#include "glm/glm.hpp"
+#include "glm/gtc/matrix_transform.hpp"
+#include "glm/gtc/type_ptr.hpp"
+
+#ifdef OS_MAC
 #include "ImageLib.h"
+#endif
 
 static float g_mixValue = 0.0;
 
@@ -125,14 +132,16 @@ int main(int argc, const char * argv[])
 
 	glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT );
 	glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT );
-    
+
+#ifdef OS_MAC
     ImageLib img;
     img.LoadImageFile("/Users/ddk/Desktop/Project/OpenGL/OpenGL/resource/texture.png");
 
-    /*
+#elif OS_WIN
+
 	int imgWidth, imgHeigth;
     unsigned char* image = SOIL_load_image("resource/container.jpg", &imgWidth, &imgHeigth, 0,SOIL_LOAD_RGB);
-    
+
     memset(image, 0, 1024);
 	glTexImage2D( GL_TEXTURE_2D, 0, GL_RGB, imgWidth, imgHeigth, 0, GL_RGB, GL_UNSIGNED_BYTE, image );
 	glGenerateMipmap( GL_TEXTURE_2D );
@@ -149,8 +158,8 @@ int main(int argc, const char * argv[])
 	glGenerateMipmap( GL_TEXTURE_2D );
 	SOIL_free_image_data(image);
 	glBindTexture( GL_TEXTURE_2D, 0 );
-*/
-    
+#endif
+
     while ( !glfwWindowShouldClose(window))
     {
         glfwPollEvents();
@@ -159,11 +168,18 @@ int main(int argc, const char * argv[])
         glClear(GL_COLOR_BUFFER_BIT);
 
 		glUseProgram( shaderProgram );
+		glBindVertexArray( VAO );
 
-		//GLfloat timeValue = glfwGetTime();
+		GLfloat timeValue = glfwGetTime();
 		//GLfloat greenValue = (sin(timeValue) / 2) + 0.5;
 		//GLint vertexColorLocation = glGetUniformLocation(shaderProgram, "ourColor");
 		//glUniform4f(vertexColorLocation, 0.0f, greenValue, 0.0f, 1.0f);
+
+		glm::mat4 trans;
+		trans = glm::rotate(trans, glm::radians(timeValue * 50.0f), glm::vec3(0, 0, 1.0));
+		trans = glm::translate(trans, glm::vec3(0.5f, -0.5f, 0.0f));
+
+		//trans = glm::scale(trans, glm::vec3(0.5, 0.5, 0.5));
 
 		glActiveTexture(GL_TEXTURE0);
 		glBindTexture(GL_TEXTURE_2D, texture1);
@@ -172,12 +188,20 @@ int main(int argc, const char * argv[])
 		glActiveTexture( GL_TEXTURE1 );
 		glBindTexture( GL_TEXTURE_2D, texture2);
 		glUniform1i( glGetUniformLocation( shaderProgram, "ourTexture2" ), 1 );
-
 		glUniform1f( glGetUniformLocation( shaderProgram, "mixValue" ), g_mixValue );
 
-		glBindVertexArray( VAO );
-		glDrawElements( GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0 );
-		//glDrawArrays( GL_TRIANGLES, 0, 3);
+		glUniformMatrix4fv( glGetUniformLocation(shaderProgram, "transform"), 1, GL_FALSE, glm::value_ptr(trans) );
+	//	glDrawElements( GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0 );
+
+		//===========second=========
+		GLfloat scaleValue = sin(timeValue);
+		trans = glm::mat4();
+
+		trans = glm::translate(trans, glm::vec3(-0.5f, 0.5f, 0.0f));
+		trans = glm::scale(trans, glm::vec3(scaleValue, scaleValue, scaleValue));
+
+		glUniformMatrix4fv( glGetUniformLocation(shaderProgram, "transform"), 1, GL_FALSE, glm::value_ptr(trans) );
+		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 		glBindVertexArray(0);
 
         glfwSwapBuffers(window);
