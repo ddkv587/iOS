@@ -214,7 +214,7 @@ int main(int argc, const char * argv[])
             _model = glm::translate(_model, cubePositions[i]);
             GLfloat angle;
             if ( i%3 == 0 ) {
-                angle = 20.0f * ( i + 0.1f) * timeValue;
+                angle = 20.0f * ( i + 0.1f) * timeValue; 
             } else {
                 angle = 20.0f * i;
             }
