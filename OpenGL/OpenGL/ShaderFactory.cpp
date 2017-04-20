@@ -5,7 +5,7 @@
 
 #include "ShaderFactory.h"
 
-ShaderFactory* ShaderFactory::s_pInstance = NULL;
+ShaderFactory* ShaderFactory::s_pInstance = NULL;  
 
 ShaderFactory::ShaderFactory(void)
 {
