@@ -100,8 +100,8 @@ GLuint ShaderFactory::createShader(const GLchar* vertexPath, const GLchar* fragm
 	glGetShaderiv( fragment, GL_COMPILE_STATUS, &success );
 	if ( !success )
 	{
-		glGetShaderInfoLog( vertex, 512, NULL, infoLog );
-		std::cout << "error compile vertex shader: \n" << infoLog << std::endl;
+		glGetShaderInfoLog( fragment, 512, NULL, infoLog );
+		std::cout << "error compile fragment shader: \n" << infoLog << std::endl;
 
 		return 0;
 	}

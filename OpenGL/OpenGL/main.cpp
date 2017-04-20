@@ -7,6 +7,7 @@
 //
 
 #include <iostream>
+#include <unistd.h>
 
 //glew
 #define GLEW_STATIC
@@ -16,7 +17,8 @@
 #include <GLFW/glfw3.h>
 
 #include <math.h>
-#include <SOIL/SOIL.h>
+
+#include "SOIL/SOIL.h"
 
 #include "ShaderFactory.h"
 #include "DataCollect.h"
@@ -25,9 +27,8 @@
 #include "glm/gtc/matrix_transform.hpp"
 #include "glm/gtc/type_ptr.hpp"
 
-#ifdef OS_MAC
-#include "ImageLib.h"
-#endif
+#define DEF_WIDTH 800
+#define DEF_HEIGHT 480
 
 static float g_mixValue = 0.0;
 
@@ -86,18 +87,25 @@ void keyCallBack(GLFWwindow* window, int key, int scannode, int action, int mode
 
 int main(int argc, const char * argv[])
 {
+#if defined(OS_MAC)
+    chdir("/Users/ddk/Desktop/Project/OpenGL/OpenGL/");
+#elif defined(OS_WINDOW)
+    chdir("/Users/ddk/Desktop/Project/OpenGL/OpenGL/");
+#endif
     glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
     glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
-
-    GLFWwindow *window       = createWindow(0, 0, 800, 480);
+    
+    GLFWwindow *window       = createWindow(0, 0, DEF_WIDTH, DEF_HEIGHT);
     GLuint  shaderProgram    = ShaderFactory::getInstance()->createShader("shader/VertexShader.c", "shader/FragmentShader.c");
 
     glfwSetKeyCallback(window, keyCallBack);
-
+    
+    glEnable(GL_DEPTH_TEST);
+    
     GLuint VAO, VBO, EBO;
 	glGenBuffers(1, &VBO);
 	glGenBuffers(1, &EBO);
@@ -106,6 +114,7 @@ int main(int argc, const char * argv[])
 	glBindVertexArray(VAO);
 
     glBindBuffer( GL_ARRAY_BUFFER, VBO );
+    /*
     glBufferData( GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW );
 
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), (GLvoid*)0);
@@ -116,6 +125,13 @@ int main(int argc, const char * argv[])
 
 	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), (GLvoid*)(6 * sizeof( GLfloat )));
 	glEnableVertexAttribArray(2);
+    */
+    glBufferData( GL_ARRAY_BUFFER, sizeof(vertices_box), vertices_box, GL_STATIC_DRAW );
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(GL_FLOAT), (GLvoid*)0 );
+    glEnableVertexAttribArray(0);
+    
+    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(GLfloat), (GLvoid*)(3 * sizeof( GLfloat )));
+    glEnableVertexAttribArray(1);
 
 	glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, EBO );
 	glBufferData( GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW );
@@ -133,16 +149,9 @@ int main(int argc, const char * argv[])
 	glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT );
 	glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT );
 
-#ifdef OS_MAC
-    ImageLib img;
-    img.LoadImageFile("/Users/ddk/Desktop/Project/OpenGL/OpenGL/resource/texture.png");
-
-#elif OS_WIN
-
 	int imgWidth, imgHeigth;
     unsigned char* image = SOIL_load_image("resource/container.jpg", &imgWidth, &imgHeigth, 0,SOIL_LOAD_RGB);
 
-    memset(image, 0, 1024);
 	glTexImage2D( GL_TEXTURE_2D, 0, GL_RGB, imgWidth, imgHeigth, 0, GL_RGB, GL_UNSIGNED_BYTE, image );
 	glGenerateMipmap( GL_TEXTURE_2D );
 	SOIL_free_image_data(image);
@@ -158,14 +167,13 @@ int main(int argc, const char * argv[])
 	glGenerateMipmap( GL_TEXTURE_2D );
 	SOIL_free_image_data(image);
 	glBindTexture( GL_TEXTURE_2D, 0 );
-#endif
 
     while ( !glfwWindowShouldClose(window))
     {
         glfwPollEvents();
 
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-        glClear(GL_COLOR_BUFFER_BIT);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		glUseProgram( shaderProgram );
 		glBindVertexArray( VAO );
@@ -176,8 +184,8 @@ int main(int argc, const char * argv[])
 		//glUniform4f(vertexColorLocation, 0.0f, greenValue, 0.0f, 1.0f);
 
 		glm::mat4 trans;
-		trans = glm::rotate(trans, glm::radians(timeValue * 50.0f), glm::vec3(0, 0, 1.0));
-		trans = glm::translate(trans, glm::vec3(0.5f, -0.5f, 0.0f));
+		//trans = glm::rotate(trans, glm::radians(timeValue * 50.0f), glm::vec3(0, 0, 1.0));
+		//trans = glm::translate(trans, glm::vec3(0.5f, -0.5f, 0.0f));
 
 		//trans = glm::scale(trans, glm::vec3(0.5, 0.5, 0.5));
 
@@ -191,10 +199,37 @@ int main(int argc, const char * argv[])
 		glUniform1f( glGetUniformLocation( shaderProgram, "mixValue" ), g_mixValue );
 
 		glUniformMatrix4fv( glGetUniformLocation(shaderProgram, "transform"), 1, GL_FALSE, glm::value_ptr(trans) );
-	//	glDrawElements( GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0 );
+        
+        glm::mat4 model, view, projection;
+        //model = glm::rotate(model, glm::radians(timeValue * 50.0f), glm::vec3(0.5f, 1.0f, 0.0f));
+        view    = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f) );
+        projection = glm::perspective(glm::radians(45.0f), (GLfloat)DEF_WIDTH/(GLfloat)DEF_HEIGHT, 0.1f, 100.0f);
+        
+        //glUniformMatrix4fv( glGetUniformLocation(shaderProgram, "model"), 1, GL_FALSE, glm::value_ptr(model) );
+        glUniformMatrix4fv( glGetUniformLocation(shaderProgram, "view"), 1, GL_FALSE, glm::value_ptr(view) );
+        glUniformMatrix4fv( glGetUniformLocation(shaderProgram, "projection"), 1, GL_FALSE, glm::value_ptr(projection) );
+        
+        for ( int i=0; i < 10; ++i) {
+            glm::mat4 _model;
+            _model = glm::translate(_model, cubePositions[i]);
+            GLfloat angle;
+            if ( i%3 == 0 ) {
+                angle = 20.0f * ( i + 0.1f) * timeValue;
+            } else {
+                angle = 20.0f * i;
+            }
+            _model = glm::rotate(_model, glm::radians(angle), glm::vec3(1.0f, 0.3f, 0.5f));
+            glUniformMatrix4fv( glGetUniformLocation(shaderProgram, "model"), 1, GL_FALSE, glm::value_ptr(_model) );
+            glDrawArrays(GL_TRIANGLES, 0, 36);
+        }
+        
 
+       
+       // glDrawElements( GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0 );
+        
 		//===========second=========
-		GLfloat scaleValue = sin(timeValue);
+        /*
+		GLfloat scaleValue = fabs(sin(timeValue));
 		trans = glm::mat4();
 
 		trans = glm::translate(trans, glm::vec3(-0.5f, 0.5f, 0.0f));
@@ -202,8 +237,8 @@ int main(int argc, const char * argv[])
 
 		glUniformMatrix4fv( glGetUniformLocation(shaderProgram, "transform"), 1, GL_FALSE, glm::value_ptr(trans) );
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
-		glBindVertexArray(0);
-
+         */
+        glBindVertexArray(0);
         glfwSwapBuffers(window);
     }
 	glDeleteVertexArrays(1, &VAO);
