@@ -12,9 +12,7 @@
 		4B2B58ED1E7C461100569D5E /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B2B58EC1E7C461100569D5E /* OpenGL.framework */; };
 		4B2B58F41E7C577500569D5E /* ShaderFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4B2B58F21E7C577500569D5E /* ShaderFactory.cpp */; };
 		4B6A84931E7C41A8006412FE /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4B6A84921E7C41A8006412FE /* main.cpp */; };
-		4B7E67C91E9A9DB3000DD915 /* ImageLib.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4B7E67C71E9A9DB3000DD915 /* ImageLib.cpp */; };
-		4B7E67D21E9AAF05000DD915 /* ImageParse.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4B7E67D11E9AAF05000DD915 /* ImageParse.cpp */; };
-		4B8BE59A1E900C5E00911749 /* libSOIL.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B8BE5991E900C5E00911749 /* libSOIL.a */; settings = {ATTRIBUTES = (Required, ); }; };
+		4B7E67ED1EA2F951000DD915 /* libSOIL.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B7E67EC1EA2F951000DD915 /* libSOIL.dylib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -38,13 +36,8 @@
 		4B2B58F31E7C577500569D5E /* ShaderFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShaderFactory.h; sourceTree = "<group>"; };
 		4B6A848F1E7C41A8006412FE /* OpenGL */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = OpenGL; sourceTree = BUILT_PRODUCTS_DIR; };
 		4B6A84921E7C41A8006412FE /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
-		4B7E67C71E9A9DB3000DD915 /* ImageLib.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ImageLib.cpp; sourceTree = "<group>"; };
-		4B7E67C81E9A9DB3000DD915 /* ImageLib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageLib.h; sourceTree = "<group>"; };
-		4B7E67CD1E9AAA27000DD915 /* container.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = container.jpg; path = resource/container.jpg; sourceTree = "<group>"; };
-		4B7E67CF1E9AAA4F000DD915 /* texture.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = texture.png; path = resource/texture.png; sourceTree = "<group>"; };
-		4B7E67D01E9AAD1C000DD915 /* ImageParse.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ImageParse.h; sourceTree = "<group>"; };
-		4B7E67D11E9AAF05000DD915 /* ImageParse.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ImageParse.cpp; sourceTree = "<group>"; };
 		4B7E67D31E9ACF3C000DD915 /* MacroDefine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MacroDefine.h; sourceTree = "<group>"; };
+		4B7E67EC1EA2F951000DD915 /* libSOIL.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libSOIL.dylib; path = ../../../../../usr/local/lib/libSOIL.dylib; sourceTree = "<group>"; };
 		4B8BA7761E82E88D00E4B731 /* DataCollect.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DataCollect.h; sourceTree = "<group>"; };
 		4B8BE5951E8EB81200911749 /* aspell-0.60 */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "aspell-0.60"; path = "../../../../../usr/local/Cellar/aspell/0.60.6.1/lib/aspell-0.60"; sourceTree = "<group>"; };
 		4B8BE5991E900C5E00911749 /* libSOIL.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libSOIL.a; path = ../../../../../usr/local/lib/libSOIL.a; sourceTree = "<group>"; };
@@ -55,7 +48,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4B8BE59A1E900C5E00911749 /* libSOIL.a in Frameworks */,
+				4B7E67ED1EA2F951000DD915 /* libSOIL.dylib in Frameworks */,
 				4B2B58ED1E7C461100569D5E /* OpenGL.framework in Frameworks */,
 				4B2B58EB1E7C460A00569D5E /* libglfw.dylib in Frameworks */,
 				4B2B58E91E7C42DA00569D5E /* libGLEW.2.0.0.dylib in Frameworks */,
@@ -68,6 +61,7 @@
 		4B2B58E51E7C422A00569D5E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4B7E67EC1EA2F951000DD915 /* libSOIL.dylib */,
 				4B8BE5991E900C5E00911749 /* libSOIL.a */,
 				4B8BE5951E8EB81200911749 /* aspell-0.60 */,
 				4B2B58EC1E7C461100569D5E /* OpenGL.framework */,
@@ -98,27 +92,13 @@
 		4B6A84911E7C41A8006412FE /* OpenGL */ = {
 			isa = PBXGroup;
 			children = (
-				4B7E67CE1E9AAA35000DD915 /* Resource */,
-				4B6A84921E7C41A8006412FE /* main.cpp */,
 				4B2B58F21E7C577500569D5E /* ShaderFactory.cpp */,
+				4B6A84921E7C41A8006412FE /* main.cpp */,
 				4B2B58F31E7C577500569D5E /* ShaderFactory.h */,
 				4B8BA7761E82E88D00E4B731 /* DataCollect.h */,
-				4B7E67C71E9A9DB3000DD915 /* ImageLib.cpp */,
-				4B7E67C81E9A9DB3000DD915 /* ImageLib.h */,
-				4B7E67D01E9AAD1C000DD915 /* ImageParse.h */,
-				4B7E67D11E9AAF05000DD915 /* ImageParse.cpp */,
 				4B7E67D31E9ACF3C000DD915 /* MacroDefine.h */,
 			);
 			path = OpenGL;
-			sourceTree = "<group>";
-		};
-		4B7E67CE1E9AAA35000DD915 /* Resource */ = {
-			isa = PBXGroup;
-			children = (
-				4B7E67CF1E9AAA4F000DD915 /* texture.png */,
-				4B7E67CD1E9AAA27000DD915 /* container.jpg */,
-			);
-			name = Resource;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -180,9 +160,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4B2B58F41E7C577500569D5E /* ShaderFactory.cpp in Sources */,
-				4B7E67D21E9AAF05000DD915 /* ImageParse.cpp in Sources */,
 				4B6A84931E7C41A8006412FE /* main.cpp in Sources */,
-				4B7E67C91E9A9DB3000DD915 /* ImageLib.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -285,7 +263,9 @@
 		4B6A84971E7C41A8006412FE /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COPY_HEADERS_UNIFDEF_FLAGS = "";
 				DEVELOPMENT_TEAM = 5TZ49MQZKJ;
+				GCC_PREPROCESSOR_DEFINITIONS = OS_MAC;
 				HEADER_SEARCH_PATHS = /usr/local/include;
 				LIBRARY_SEARCH_PATHS = /usr/local/lib;
 				OTHER_LDFLAGS = "";
@@ -296,7 +276,9 @@
 		4B6A84981E7C41A8006412FE /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COPY_HEADERS_UNIFDEF_FLAGS = "";
 				DEVELOPMENT_TEAM = 5TZ49MQZKJ;
+				GCC_PREPROCESSOR_DEFINITIONS = OS_MAC;
 				HEADER_SEARCH_PATHS = /usr/local/include;
 				LIBRARY_SEARCH_PATHS = /usr/local/lib;
 				OTHER_LDFLAGS = "";
